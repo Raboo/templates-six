@@ -179,6 +179,24 @@ if ($notes) {
     $pdf->MultiCell(170, 5, Lang::trans('invoicesnotes') . ': ' . $notes);
 }
 
+# Custom notes
+$header_text = "Other details / Ãriga detaljer";
+$left_col = "Bankgiro 375-6806\nVAT SE821126021401\n";
+$left_html = "<b>Bankgiro</b> 375-6806<br /><b>VAT</b> SE821126021401";
+$right_col = "(Approved for F-tax)\n(GodkÃ¤nd fÃ¶r F-skatt)\n";
+$pdf->Ln(5);
+$pdf->SetFillColor(239);
+$pdf->SetFont($pdfFont,'',8);
+# MultiCell ($w, $h, $txt, $border=0, $align='J', $fill=false, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0, $valign='T', $fitcell=false)
+# Cell ($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=false, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M')
+$pdf->SetFont($pdfFont,'B',10);
+$pdf->Cell(0, 0, $header_text, 0, 1, "L");
+$pdf->SetFont($pdfFont,'',9);
+$pdf->writeHTMLCell(90, '', '', '', $left_html, 0, 0, 1, true, 'L', true);
+#$pdf->writeHTMLCell(90, '', '', '', $left_html, 0, 1, 1, true, 'L', true);
+#$pdf->MultiCell(90, 0, $left_col, 0, 'L', 1, 0, '', '', true, 0, false, true, 0);
+$pdf->MultiCell(90, 0, $right_col, 0, 'R', 1, 1, '', '', true, 0, false, true, 0);
+
 # Generation Date
 $pdf->SetFont($pdfFont, '', 8);
 $pdf->Ln(5);

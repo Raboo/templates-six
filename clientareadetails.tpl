@@ -94,6 +94,11 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="inputTaxId" class="control-label">{lang key=$taxIdLabel}</label>
+                <input type="text" name="tax_id" id="inputTaxId" class="form-control" value="{$clientTaxId}"{if in_array('tax_id', $uneditablefields)} disabled="disabled"{/if} />
+            </div>
+
             {if $customfields}
                 {foreach from=$customfields key=num item=customfield}
                     <div class="form-group">
@@ -105,19 +110,16 @@
                 {/foreach}
             {/if}
 
-            {if $emailoptoutenabled}
-            <div class="form-group">
-                <label class="control-label" for="inputEmailOptOut">{$LANG.emailoptout}</label>
-                <div class="controls checkbox">
-                    <label>
-                        <input type="checkbox" value="1" name="emailoptout" id="inputEmailOptOut" {if $emailoptout} checked{/if} /> {$LANG.emailoptoutdesc}
-                    </label>
-                </div>
-            </div>
-            {/if}
-
         </div>
     </div>
+
+    {if $showMarketingEmailOptIn}
+        <div class="marketing-email-optin">
+            <h4>{lang key='emailMarketing.joinOurMailingList'}</h4>
+            <p>{$marketingEmailOptInMessage}</p>
+            <input type="checkbox" name="marketingoptin" value="1"{if $marketingEmailOptIn} checked{/if} class="no-icheck toggle-switch-success" data-size="small" data-on-text="{lang key='yes'}" data-off-text="{lang key='no'}">
+        </div>
+    {/if}
 
     <div class="form-group text-center">
         <input class="btn btn-primary" type="submit" name="save" value="{$LANG.clientareasavechanges}" />

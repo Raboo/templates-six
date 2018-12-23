@@ -17,7 +17,7 @@
             <div class="announcement-single">
                 <h3>
                     <span class="label label-default">
-                        {$carbon->translatePassedToFormat($announcement.rawDate, 'M jS')}
+                        {$announcement.rawDate|date_format:"M jS"}
                     </span>
                     <a href="{routePath('announcement-view', $announcement.id, $announcement.urlfriendlytitle)}">{$announcement.title}</a>
                 </h3>

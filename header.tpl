@@ -11,7 +11,7 @@
     {$headoutput}
 
 </head>
-<body data-phone-cc-input="{$phoneNumberInputStyle}">
+<body>
 
 {$headeroutput}
 
@@ -39,9 +39,7 @@
                 <li>
                     <a href="#" data-toggle="popover" id="accountNotifications" data-placement="bottom">
                         {$LANG.notifications}
-                        {if count($clientAlerts) > 0}
-                            <span class="label label-info">{lang key='notificationsnew'}</span>
-                        {/if}
+                        {if count($clientAlerts) > 0}<span class="label label-info">NEW</span>{/if}
                         <b class="caret"></b>
                     </a>
                     <div id="accountNotificationsContent" class="hidden">
@@ -49,7 +47,7 @@
                         {foreach $clientAlerts as $alert}
                             <li>
                                 <a href="{$alert->getLink()}">
-                                    <i class="fas fa-fw fa-{if $alert->getSeverity() == 'danger'}exclamation-circle{elseif $alert->getSeverity() == 'warning'}exclamation-triangle{elseif $alert->getSeverity() == 'info'}info-circle{else}check-circle{/if}"></i>
+                                    <i class="fa fa-fw fa-{if $alert->getSeverity() == 'danger'}exclamation-circle{elseif $alert->getSeverity() == 'warning'}warning{elseif $alert->getSeverity() == 'info'}info-circle{else}check-circle{/if}"></i>
                                     <div class="message">{$alert->getMessage()}</div>
                                 </a>
                             </li>
@@ -62,7 +60,7 @@
                     </div>
                 </li>
                 <li class="primary-action">
-                    <a href="{$WEB_ROOT}/logout.php" class="btn">
+                    <a href="{$WEB_ROOT}/logout.php" class="btn btn-action">
                         {$LANG.clientareanavlogout}
                     </a>
                 </li>
@@ -76,7 +74,7 @@
                     </li>
                 {/if}
                 <li class="primary-action">
-                    <a href="{$WEB_ROOT}/cart.php?a=view" class="btn">
+                    <a href="{$WEB_ROOT}/cart.php?a=view" class="btn btn-action">
                         {$LANG.viewcart}
                     </a>
                 </li>
@@ -84,7 +82,7 @@
             {if $adminMasqueradingAsClient || $adminLoggedIn}
                 <li>
                     <a href="{$WEB_ROOT}/logout.php?returntoadmin=1" class="btn btn-logged-in-admin" data-toggle="tooltip" data-placement="bottom" title="{if $adminMasqueradingAsClient}{$LANG.adminmasqueradingasclient} {$LANG.logoutandreturntoadminarea}{else}{$LANG.adminloggedin} {$LANG.returntoadminarea}{/if}">
-                        <i class="fas fa-sign-out-alt"></i>
+                        <i class="fa fa-sign-out"></i>
                     </a>
                 </li>
             {/if}
@@ -139,17 +137,17 @@
         <div class="container text-center">
             {if $registerdomainenabled || $transferdomainenabled}
                 <h2>{$LANG.homebegin}</h2>
-                <form method="post" action="domainchecker.php" id="frmDomainHomepage">
+                <form method="post" action="domainchecker.php">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                             <div class="input-group input-group-lg">
-                                <input type="text" class="form-control" name="domain" placeholder="{$LANG.exampledomain}" autocapitalize="none" data-toggle="tooltip" data-placement="left" data-trigger="manual" title="{lang key='orderForm.required'}" />
+                                <input type="text" class="form-control" name="domain" placeholder="{$LANG.exampledomain}" autocapitalize="none" />
                                 <span class="input-group-btn">
                                     {if $registerdomainenabled}
-                                        <input type="submit" class="btn search{$captcha->getButtonClass($captchaForm)}" value="{$LANG.search}" />
+                                        <input type="submit" class="btn search" value="{$LANG.search}" />
                                     {/if}
                                     {if $transferdomainenabled}
-                                        <input type="submit" name="transfer" class="btn transfer{$captcha->getButtonClass($captchaForm)}" value="{$LANG.domainstransfer}" />
+                                        <input type="submit" name="transfer" class="btn transfer" value="{$LANG.domainstransfer}" />
                                     {/if}
                                 </span>
                             </div>
@@ -176,7 +174,7 @@
                         {if $registerdomainenabled || $transferdomainenabled}
                             <li>
                                 <a id="btnBuyADomain" href="domainchecker.php">
-                                    <i class="fas fa-globe"></i>
+                                    <i class="fa fa-globe"></i>
                                     <p>
                                         {$LANG.buyadomain} <span>&raquo;</span>
                                     </p>
@@ -185,7 +183,7 @@
                         {/if}
                         <li>
                             <a id="btnOrderHosting" href="cart.php">
-                                <i class="far fa-hdd"></i>
+                                <i class="fa fa-hdd-o"></i>
                                 <p>
                                     {$LANG.orderhosting} <span>&raquo;</span>
                                 </p>
@@ -193,7 +191,7 @@
                         </li>
                         <li>
                             <a id="btnMakePayment" href="clientarea.php">
-                                <i class="fas fa-credit-card"></i>
+                                <i class="fa fa-credit-card"></i>
                                 <p>
                                     {$LANG.makepayment} <span>&raquo;</span>
                                 </p>
@@ -201,7 +199,7 @@
                         </li>
                         <li>
                             <a id="btnGetSupport" href="submitticket.php">
-                                <i class="far fa-envelope"></i>
+                                <i class="fa fa-envelope-o"></i>
                                 <p>
                                     {$LANG.getsupport} <span>&raquo;</span>
                                 </p>

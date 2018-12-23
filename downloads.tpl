@@ -18,7 +18,7 @@
         {foreach $dlcats as $dlcat}
             <div class="col-sm-6">
                 <a href="{routePath('download-by-cat', $dlcat.id, $dlcat.urlfriendlyname)}">
-                    <i class="far fa-folder-open"></i>
+                    <i class="fa fa-folder-open-o"></i>
                     <strong>{$dlcat.name}</strong>
                 </a>
                 ({$dlcat.numarticles})
@@ -38,10 +38,10 @@
         {foreach $mostdownloads as $download}
             <a href="{$download.link}" class="list-group-item">
                 <strong>
-                    <i class="fas fa-download"></i>
+                    <i class="fa fa-download"></i>
                     {$download.title}
                     {if $download.clientsonly}
-                        <i class="fas fa-lock text-muted"></i>
+                        <i class="fa fa-lock text-muted"></i>
                     {/if}
                 </strong>
                 <br>

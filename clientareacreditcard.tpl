@@ -8,25 +8,21 @@
 
     <div class="credit-card">
         <div class="card-icon pull-right">
-            <b class="fa-2x
+            <b class="fa fa-2x
             {if $cardtype eq "American Express"}
-                fab fa-cc-amex logo-amex
+                fa-cc-amex logo-amex
             {elseif $cardtype eq "Visa"}
-                fab fa-cc-visa logo-visa
+                fa-cc-visa logo-visa
             {elseif $cardtype eq "MasterCard"}
-                fab fa-cc-mastercard logo-mastercard
+                fa-cc-mastercard logo-mastercard
             {elseif $cardtype eq "Discover"}
-                fab fa-cc-discover logo-discover
-            {elseif $cardtype eq "JCB"}
-                fab fa-cc-jcb logo-jcb
-            {elseif $cardtype eq "Diners Club" || $cardtype eq "EnRoute"}
-                fab fa-cc-diners-club logo-diners-club
+                fa-cc-discover logo-discover
             {else}
-                fas fa-credit-card
+                fa-credit-card
             {/if}">&nbsp;</b>
         </div>
         <div class="card-type">
-            {if $cardtype neq "American Express" && $cardtype neq "Visa" && $cardtype neq "MasterCard" && $cardtype neq "Discover" && $cardtype neq "JCB" && $cardtype neq "Diners Club" && $cardtype neq "EnRoute"}
+            {if $cardtype neq "American Express" && $cardtype neq "Visa" && $cardtype neq "MasterCard" && $cardtype neq "Discover"}
                 {$cardtype}
             {/if}
         </div>
@@ -34,10 +30,10 @@
             {if $cardlastfour}xxxx xxxx xxxx {$cardlastfour}{else}{$LANG.creditcardnonestored}{/if}
         </div>
         <div class="card-start">
-            {if $cardstart}{$LANG.creditcardcardstart}: {$cardstart}{/if}
+            {if $cardstart}Start: {$cardstart}{/if}
         </div>
         <div class="card-expiry">
-            {if $cardexp}{$LANG.creditcardcardexpires}: {$cardexp}{/if}
+            {if $cardexp}Expires: {$cardexp}{/if}
         </div>
         <div class="end"></div>
     </div>
@@ -46,7 +42,7 @@
         <form method="post" action="clientarea.php?action=creditcard">
             <input type="hidden" name="remove" value="1" />
             <p class="text-center">
-                <button type="submit" class="btn btn-danger" data-toggle="confirmation" data-btn-ok-label="{lang key='yes'}" data-btn-ok-icon="fas fa-check" data-btn-ok-class="btn-success" data-btn-cancel-label="{lang key='no'}" data-btn-cancel-icon="fas fa-ban" data-btn-cancel-class="btn-default" data-title="{lang key='creditcarddelete'}" data-content="{lang key='creditCard.removeDescription'}" data-popout="true">
+                <button type="submit" class="btn btn-danger">
                     {$LANG.creditcarddelete}
                 </button>
             </p>

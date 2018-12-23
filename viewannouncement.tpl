@@ -9,17 +9,8 @@
 <br />
 <br />
 
-{if $editLink}
-    <p>
-        <a href="{$editLink}" class="btn btn-default btn-sm pull-right">
-            <i class="fas fa-pencil-alt fa-fw"></i>
-            {$LANG.edit}
-        </a>
-    </p>
-{/if}
-
 <p>
-    <strong>{$carbon->createFromTimestamp($timestamp)->format('l, F j, Y')}</strong>
+    <strong>{$timestamp|date_format:"%A, %B %e, %Y"}</strong>
 </p>
 
 {if $googleplus1}

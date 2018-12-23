@@ -20,30 +20,29 @@
                 <p>{$promotion->getDescription()}</p>
             {/if}
 
-            {if $promotion->hasFeatures()}
+            {if $promotion->hasHighlights()}
                 <ul>
-                    {foreach $promotion->getFeatures() as $feature}
-                        <li><i class="far fa-check-circle"></i> {$feature}</li>
+                    {foreach $promotion->getHighlights() as $highlight}
+                        <li><i class="fa fa-check-circle-o"></i> {$highlight}</li>
                     {/foreach}
                 </ul>
             {/if}
 
-            <form method="post" action="{$targetUrl}">
-                {foreach $inputParameters as $key => $value}
-                    <input type="hidden" name="{$key}" value="{$value}">
-                {/foreach}
+            {if $promotion->hasFeatures()}
+                <ul>
+                    {foreach $promotion->getFeatures() as $feature}
+                        <li><i class="fa fa-check-circle-o"></i> {$feature}</li>
+                    {/foreach}
+                </ul>
+            {/if}
+
+            <form method="post" action="{routePath('store-order')}">
+                <input type="hidden" name="pid" value="{$product->id}">
+                {if $serviceId}
+                    <input type="hidden" name="serviceid" value="{$serviceId}">
+                {/if}
                 <button type="submit" class="btn btn-success">
-                    {$promotion->getCta()} {$product->name}
-                    {if $product->isFree()}
-                        {lang key="orderfree"}
-                    {else}
-                        from just
-                        {if $product->pricing()->first()->isYearly()}
-                            {$product->pricing()->first()->yearlyPrice()}
-                        {else}
-                            {$product->pricing()->first()->monthlyPrice()}
-                        {/if}
-                    {/if}
+                    {$promotion->getCta()} {$product->name} from just {$product->pricing()->best()->breakdownPrice()}
                 </button>
             </form>
 

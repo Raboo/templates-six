@@ -39,20 +39,14 @@
         {/if}
 
         <div class="pricing">
-            <h3>
-                {if $product->isFree()}
-                    {lang key="orderfree"}
-                {elseif $product->pricing()->first()}
-                    {$product->pricing()->first()->breakdownPrice()}
-                {/if}
-            </h3>
+            <h3>{$product->pricing()->first()->breakdownPrice()}</h3>
 
             <button type="button" class="btn btn-sm btn-add" data-product-key="{$product->productKey}">
                 <span class="loading hidden">
                     <i class="fa fa-spinner fa-spin"></i>
                 </span>
                 <span class="text">
-                    {lang key="addtocart"}
+                    Add to Cart
                 </span>
             </button>
         </div>

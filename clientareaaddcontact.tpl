@@ -4,11 +4,8 @@
 
 <script>
 var stateNotRequired = true;
-    jQuery(document).ready(function() {
-    WHMCS.form.register();
-});
 </script>
-<script src="{$BASE_PATH_JS}/StatesDropdown.js"></script>
+<script type="text/javascript" src="{$BASE_PATH_JS}/StatesDropdown.js"></script>
 
 <div class="alert alert-block alert-info">
     <form class="form-horizontal" role="form" method="post" action="{$smarty.server.PHP_SELF}?action=contacts">
@@ -61,11 +58,6 @@ var stateNotRequired = true;
             </div>
 
             <div class="form-group">
-                <label for="inputTaxId" class="control-label">{lang key=$taxIdLabel}</label>
-                <input type="text" name="tax_id" id="inputTaxId" class="form-control" value="{$contactTaxId}" />
-            </div>
-
-            <div class="form-group">
                 <label class="control-label" for="inputSubaccountActivate">{$LANG.subaccountactivate}</label>
                 <div class="controls checkbox">
                     <label><input type="checkbox" name="subaccount" id="inputSubaccountActivate"{if $subaccount} checked{/if} /> {$LANG.subaccountactivatedesc}</label>
@@ -112,7 +104,7 @@ var stateNotRequired = true;
 
         <div class="form-group">
             <label class="full control-label">{$LANG.subaccountpermissions}</label>
-            <div class="checkbox clearfix" id="contactPermissions">
+            <div class="checkbox clearfix">
                 {foreach $allPermissions as $permission}
                     <div class="col-sm-6">
                         <label>
@@ -123,13 +115,6 @@ var stateNotRequired = true;
                         </label>
                     </div>
                 {/foreach}
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-sm btn-check-all" data-checkbox-container="contactPermissions" data-btn-check-toggle="1" id="btnSelectAll-contactPermissions" data-label-text-select="{lang key='checkAll'}" data-label-text-deselect="{lang key='uncheckAll'}">
-                        {lang key='checkAll'}
-                    </button>
-                </div>
             </div>
         </div>
         <fieldset class="form-horizontal">
@@ -155,7 +140,7 @@ var stateNotRequired = true;
     </div>
 
     <div class="form-group">
-        <h3>{$LANG.clientareacontactsemails}</h3>
+        <label class="control-label">{$LANG.clientareacontactsemails}</label>
         <div class="controls checkbox">
             <label>
                 <input type="checkbox" name="generalemails" id="generalemails" value="1"{if $generalemails} checked{/if} />

@@ -10,18 +10,22 @@
 
     <script type="text/javascript" src="{$BASE_PATH_JS}/StatesDropdown.js"></script>
 
-    <div class="alert alert-block alert-info text-center">
-        <form class="form-inline" role="form" method="post" action="{$smarty.server.PHP_SELF}?action=contacts">
-            <div class="form-group">
-                <label for="inputContactID">{$LANG.clientareachoosecontact}</label>
-                <select name="contactid" id="inputContactID" onchange="submit()" class="form-control">
-                    {foreach item=contact from=$contacts}
-                        <option value="{$contact.id}"{if $contact.id eq $contactid} selected="selected"{/if}>{$contact.name} - {$contact.email}</option>
-                    {/foreach}
-                    <option value="new">{$LANG.clientareanavaddcontact}</option>
-                </select>
+    <div class="alert alert-block alert-info">
+        <form class="form-horizontal" role="form" method="post" action="{$smarty.server.PHP_SELF}?action=contacts">
+            <div class="row">
+                <label for="inputContactId" class="col-sm-3 control-label">{$LANG.clientareachoosecontact}</label>
+                <div class="col-sm-6">
+                    <select name="contactid" id="inputContactId" onchange="submit()" class="form-control">
+                        {foreach item=contact from=$contacts}
+                            <option value="{$contact.id}"{if $contact.id eq $contactid} selected="selected"{/if}>{$contact.name} - {$contact.email}</option>
+                        {/foreach}
+                        <option value="new">{$LANG.clientareanavaddcontact}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 hidden-xs">
+                    <button type="submit" class="btn btn-default btn-block">{$LANG.go}</button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-default">{$LANG.go}</button>
         </form>
     </div>
 
@@ -105,7 +109,7 @@
 
             <div class="form-group">
                 <label class="full control-label">{$LANG.subaccountpermissions}</label>
-                <div class="checkbox clearfix">
+                <div class="checkbox clearfix" id="contactPermissions">
                     {foreach $allPermissions as $permission}
                         <div class="col-sm-6">
                             <label>
@@ -116,6 +120,13 @@
                             </label>
                         </div>
                     {/foreach}
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-sm btn-check-all" data-checkbox-container="contactPermissions" data-btn-check-toggle="1" id="btnSelectAll-contactPermissions" data-label-text-select="{lang key='checkAll'}" data-label-text-deselect="{lang key='uncheckAll'}">
+                            {lang key='checkAll'}
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -138,11 +149,14 @@
                     </div>
                 </div>
             </fieldset>
-
+            {if $hasLinkedProvidersEnabled}
+                <h3>Linked Accounts</h3>
+                {include file="$template/includes/linkedaccounts.tpl" linkContext="linktable" }
+            {/if}
         </div>
 
         <div class="form-group">
-            <label class="control-label">{$LANG.clientareacontactsemails}</label>
+            <h3>{$LANG.clientareacontactsemails}</h3>
             <div class="controls checkbox">
                 <label>
                     <input type="checkbox" name="generalemails" id="generalemails" value="1"{if $generalemails} checked{/if} />
@@ -170,7 +184,7 @@
         <div class="form-group text-center">
             <input class="btn btn-primary" type="submit" name="save" value="{$LANG.clientareasavechanges}" />
             <input class="btn btn-default" type="reset" value="{$LANG.cancel}" />
-            <input class="btn btn-danger" type="button" value="{$LANG.clientareadeletecontact}" onclick="deleteContact('{$LANG.clientareadeletecontactareyousure}', {$contactid})" />
+            <a class="btn btn-danger" data-toggle="confirmation" data-btn-ok-label="{lang key='yes'}" data-btn-ok-icon="fa fa-check" data-btn-ok-class="btn-success" data-btn-cancel-label="{lang key='no'}" data-btn-cancel-icon="fa fa-ban" data-btn-cancel-class="btn-default" data-title="{lang key='clientareadeletecontact'}" data-content="{lang key='clientareadeletecontactareyousure'}" data-popout="true" href="clientarea.php?action=contacts&delete=true&id={$contactid}&token={$token}">{lang key='clientareadeletecontact'}</a>
         </div>
 
     </form>
@@ -179,3 +193,37 @@
     {include file="$template/clientareaaddcontact.tpl"}
 
 {/if}
+
+<script>
+    jQuery(document).ready( function ()
+    {
+        WHMCS.form.register();
+        jQuery('.removeAccountLink').click(function (e) {
+            e.preventDefault();
+            var authUserID = jQuery(this).data('authid');
+            swal(
+                {
+                    title: "Are you sure?",
+                    text: "This permanently unlinks the authorized account.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, unlink it!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    WHMCS.http.jqClient.post('{routePath('auth-manage-client-delete')}' + authUserID,
+                        {
+                            'token': '" . generate_token("plain") . "'
+                        }).done(function(data) {
+                        if (data.status == 'success') {
+                            jQuery('#remoteAuth' + authUserID).remove();
+                            swal("Unlinked!", data.message, "success");
+                        } else {
+                            swal("Error!", data.message, "error");
+                        }
+                    });
+                });
+        });
+    });
+</script>
